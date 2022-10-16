@@ -6,7 +6,7 @@ export default function Article({ article, lastArticle = true, flipped = false }
             <div className="mb-8">
                 <p className="uppercase text-center text-4xl my-2 font-serif">{article.headline}</p>
                 <hr className="my-4 w-[60%] m-auto border-[1px] border-gray-300" />
-                <p className="text-center font-serif font-semibold text-gray-600 mb-4 uppercase">By {article.author}</p>
+                <p className="text-center font-serif font-semibold text-gray-600 mb-4">by <span className="uppercase">{article.author}</span></p>
                 <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${flipped && 'md:hidden'}`}>
                     <Image path={article.imagePath} />
                     <div className="">

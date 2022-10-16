@@ -150,7 +150,8 @@ function CompletedPaper({ paperDocId, db, paper }) {
 
     const printNewspaper = () => {
         var pdf = document.getElementById("newspaper");
-        var mywindow = window.open("", "PRINT", "height=600,width=600");
+        var mywindow = window.open("", "PRINT", "height=1000,width=1152");
+        mywindow.document.write(document.head.innerHTML);
         mywindow.document.write(pdf.innerHTML);
         mywindow.document.close();
         mywindow.focus();

@@ -48,13 +48,13 @@ function App() {
 
     return (
         <div className="flex justify-center md:py-32 min-h-screen">
-            {/* BELOW THIS LINE */}
-            <div id="newspaper" className="newspaper border border-gray-200 shadow-md rounded-xl bg-white p-4 md:p-16 max-w-5xl w-full h-full">
+            <div id="newspaper" className="z-20 newspaper border border-gray-200 shadow-md rounded-xl bg-white p-4 md:p-16 max-w-5xl w-full h-full">
                  { loading && <h1 className="text-4xl">Loading</h1> }
                 {(userType == 'none' && !loading) && <StartingScreen setName={setName} setJoinCode={setJoinCode} handleCreatePaper={handleCreatePaper} handleJoinPaper={handleJoinPaper} />}
 
                 { (userType != 'none' && !loading) && <Client isHost={userType=='host'} name={name} db={db} paperDocId={paperDocId} /> }
             </div>
+            <Attribution />
         </div>
     );
 }
@@ -94,12 +94,18 @@ export function Heading(){
             <h1 className="text-4xl md:text-6xl uppercase font-black my-4 font-serif text-center">the story times</h1> 
             <hr className="m-auto w-[97%] border-[1px] border-gray-300" />
             <div className="py-1 flex justify-between">
-                <p className="uppercase font-serif float-left text-left mr-2 md:ml-8">Vol. XVII.. No.</p>
+                <p className="uppercase font-serif float-left text-left mr-2 md:ml-8">Vol. LXVII.</p>
                 <p className="uppercase font-serif text-center">{getReadableToday()}</p>
                 <p className="uppercase font-serif float-right text-right ml-2 md:mr-8">THREE CENTS</p>
             </div>
             <hr className="m-auto w-[97%] border-[1px] border-gray-300 mb-4" />
         </div>
+    )
+}
+
+function Attribution(){
+    return (
+        <p className="fixed z-0 left-1/2 -translate-x-1/2 bottom-0 p-2 bg-white border">Created in under 36 hours for HackHarvard 2022 by Noah Rousell, Alexander Portland, Ryan Yang</p>
     )
 }
 

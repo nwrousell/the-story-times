@@ -44,7 +44,10 @@ var lightPrompts =
     new myPrompt("What's your best fishing story?", 2),
     new myPrompt("What's your best celebrity story?", 2),
     new myPrompt("What was your first trip outside your hometown or home country?", 1),
-    new myPrompt("What's your best road trip story?", 3)]
+    new myPrompt("What's your best road trip story?", 3),
+    new myPrompt("What's the most fun you've had at work (or school)?", 3),
+    new myPrompt("What's the most memorable sporting event you've been to? What made it so meaningful?", 3)]
+    
 lightPrompts.map(setPreferredMode(Mode.goofy))
 allPrompts = allPrompts.concat(lightPrompts);
 
@@ -63,7 +66,9 @@ var deepPrompts =
     new myPrompt("What's a story you have from your childhood?", 1),
     new myPrompt("What's the strangest thing that has happened to you on a plane?", 2),
     new myPrompt("What's the most rewarding time you've done something totally outside your comfort zone?", 3),
-    new myPrompt("What's another culture that you admire and why?", 3)]
+    new myPrompt("What's another culture that you admire and why?", 3),
+    new myPrompt("What skill are you most proud of learning? How did you learn it, and why does it make you proud?", 3)]
+    
 deepPrompts.map(setPreferredMode(Mode.deep))
 allPrompts = allPrompts.concat(deepPrompts);
 
@@ -72,6 +77,8 @@ var catchupPrompts =
     new myPrompt("What's something or someone that made you smile recently?", 1),
     new myPrompt("When was the last time you did something outside of your comfort zone? How did it go? Would you do it again?", 1),
     new myPrompt("When was the last time you couldn't stop laughing? What was so funny?", 2),
-    new myPrompt("What's a good work or school story from recently?", 2)]
+    new myPrompt("What's a fun, recent story you have from school or work?", 2)]
 catchupPrompts.map(setPreferredMode(Mode.catchup))
 allPrompts = allPrompts.concat(catchupPrompts);
+
+console.log(allPrompts);
