@@ -18,13 +18,15 @@ export default function Client({ db, paperDocId, name, isHost }) {
 
     if (!paper) return <div>loading</div>
 
+    const numOfPlayers = paper.editors.length
+
     switch (paper.state) {
         case 'lobby':
             return <Lobby isHost={isHost} paper={paper} paperDocId={paperDocId} onPaperAction={onPaperAction} />
         case 'game':
             return <>
                 <Overlay />
-                <div className="absolute z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-6xl w-full bg-white rounded-md"><Game onPaperAction={onPaperAction} isHost={isHost} paperDocId={paperDocId} db={db} paper={paper} name={name} /></div>
+                <div className="absolute z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-6xl w-full bg-white rounded-md"><Game numOfPlayers={numOfPlayers} onPaperAction={onPaperAction} isHost={isHost} paperDocId={paperDocId} db={db} paper={paper} name={name} /></div>
             </>
         case 'completed':
             return <CompletedPaper paperDocId={paperDocId} db={db} paper={paper} />
@@ -60,8 +62,8 @@ function Lobby({ paper, onPaperAction, paperDocId, isHost }) {
         </div>
     )
 }
-function Game({ paperDocId, db, paper, name, isHost, onPaperAction }) {
-    const [previousSections, currentSection, onSectionAction] = useSections(db, paperDocId, paper.sectionIds, paper.currentSectionIndex)
+function Game({ paperDocId, db, paper, name, isHost, onPaperAction, numOfPlayers }) {
+    const [previousSections, currentSection, onSectionAction] = useSections(db, paperDocId, paper.sectionIds, paper.currentSectionIndex, numOfPlayers)
     const [article, setArticle] = useState()
     const [submitted, setSubmitted] = useState(false)
     const [hasVoted, setHasVoted] = useState(false)

@@ -29,7 +29,7 @@ function generateAllPrompts(n: Number){
     for (let i = 0; i < n; i++) {
         for (let promptNum = 0; promptNum < PROMPTS_PER_USER; promptNum++) {
             if (promptsLeft.length < 1) promptsLeft = modeFilterPrompts(allPrompts);
-            let prefPrompts = specFilterPrompts(promptsLeft, (Math.min(3, promptNum) % 3) + 1);
+            let prefPrompts = specFilterPrompts(promptsLeft, (promptNum + 1))
             if (prefPrompts.length > 0){
                 let a = Math.floor(Math.random() * prefPrompts.length);
                 promptsLeft.filter((val) => val != prefPrompts[a]);
@@ -70,8 +70,6 @@ export function generateImagePaths(numOfPlayers){
     }
     return finalPaths;
 }
-
-generateImagePaths(3);
 
 function range(start, end) {
     var l = [];

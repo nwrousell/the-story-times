@@ -80,5 +80,3 @@ var catchupPrompts =
     new myPrompt("What's a fun, recent story you have from school or work?", 2)]
 catchupPrompts.map(setPreferredMode(Mode.catchup))
 allPrompts = allPrompts.concat(catchupPrompts);
-
-console.log(allPrompts);

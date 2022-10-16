@@ -32,7 +32,7 @@ type SectionActionType = 'state-change' | 'add-article' | 'vote' | 'voting-time'
 type SectionAction = { type: SectionActionType, value: any }
 
 /**  */
-export default function useSections(db: Firestore, paperDocId: string, sectionIds: string[], currentSectionIndex: number) {
+export default function useSections(db: Firestore, paperDocId: string, sectionIds: string[], currentSectionIndex: number, numOfPlayers: number) {
     const sectionsCollection = collection(db, 'papers', paperDocId, 'sections')
     const q = query(sectionsCollection)
     const [sectionsSnapshot, sectionsLoading, sectionsError] = useCollection(q);
@@ -40,8 +40,6 @@ export default function useSections(db: Firestore, paperDocId: string, sectionId
 
     const previousSections = sections.filter((val, i) => sectionIds.findIndex((id) => id == val.id) < currentSectionIndex)
     const currentSection = sections.find(({ id }, i) => id == sectionIds[currentSectionIndex])
-
-    if(currentSection) console.log(currentSection.currentFalseVotes, currentSection.currentTrueVotes)
 
     useEffect(() => {
         if (sectionsLoading) return
@@ -65,12 +63,15 @@ export default function useSections(db: Firestore, paperDocId: string, sectionId
                         })
                         break;
                     case 'voting':
+                        if(currentSection.articles.length < numOfPlayers) setTimeout(() => onAction({ type: 'state-change', value: 'voting' }), 500)
+                        
                         // this branch is returned to after each article is voted on (except for the last)
                         let articlesLeft = currentSection.articlesLeft
                         if (articlesLeft == null) {
                             articlesLeft = []
                             for(let index in currentSection.articles) articlesLeft.push(index)
                         }
+                        console.log(articlesLeft)
                         const randIndex = Math.floor(Math.random() * articlesLeft.length)
                         const currentArticle = articlesLeft[randIndex]
 
@@ -86,13 +87,12 @@ export default function useSections(db: Firestore, paperDocId: string, sectionId
                         })
                         break;
                     case 'voting-show':
-                        console.log(currentSection.currentTrueVotes, currentSection.currentFalseVotes)
-                        tempCurrentSection.articles[currentSection.currentArticle].trueVotes = currentSection.currentTrueVotes
-                        tempCurrentSection.articles[currentSection.currentArticle].falseVotes = currentSection.currentFalseVotes
+                        // tempCurrentSection.articles[currentSection.currentArticle].trueVotes = currentSection.currentTrueVotes
+                        // tempCurrentSection.articles[currentSection.currentArticle].falseVotes = currentSection.currentFalseVotes
 
                         updateDoc(currentSectionDocRef, {
                             state: 'voting-show',
-                            articles: tempCurrentSection.articles,
+                            // articles: tempCurrentSection.articles,
                             timerEnd: getDateXSecondsAway(TIME_TO_SEE_VOTING_RESULTS),
                         })
                         break;
