@@ -7,3 +7,7 @@ export function getDateXSecondsAway(seconds: number){
 export function getDateForFlipdown(date){
     return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
 }
+
+export function getReadableToday(){
+    return dayjs().format('MMMM D, YYYY')
+}

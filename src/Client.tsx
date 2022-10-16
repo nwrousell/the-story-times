@@ -9,6 +9,7 @@ import Voting from "./Voting";
 import Article from "./Article";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from 'react-firebase-hooks/firestore'
+import { Heading } from "./App";
 
 
 export default function Client({ db, paperDocId, name, isHost }) {
@@ -20,24 +21,34 @@ export default function Client({ db, paperDocId, name, isHost }) {
         case 'lobby':
             return <Lobby isHost={isHost} paper={paper} paperDocId={paperDocId} onPaperAction={onPaperAction} />
         case 'game':
-            return <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-4xl w-full bg-white rounded-md"><Game onPaperAction={onPaperAction} isHost={isHost} paperDocId={paperDocId} db={db} paper={paper} name={name} /></div>
+            return <>
+                        <Overlay />
+                        <div className="absolute z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-6xl w-full bg-white rounded-md"><Game onPaperAction={onPaperAction} isHost={isHost} paperDocId={paperDocId} db={db} paper={paper} name={name} /></div>
+                    </>
         case 'completed':
             return <CompletedPaper paperDocId={paperDocId} db={db} paper={paper} />
     }
 }
 
+function Overlay(){
+    return <div className="fixed inset-0 z-20 bg-gray-800 dark:bg-gray-200 opacity-30" />
+}
+
 function Lobby({ paper, onPaperAction, paperDocId, isHost }) {
     return (
         <div>
-            {isHost && "I'm a host"}
-            <h1>{paper.title}</h1>
-            <ul>
-                {paper.editors.map((text, i) => <li key={i}>{text}</li>)}
-            </ul>
+            <Heading />
 
-            {isHost && (<div>
-                <h1><strong>Paper Code:</strong> {paperDocId}</h1>
-                <button onClick={() => onPaperAction({ type: 'state-change', value: 'game' })}>Start game</button>
+            <p className="text-3xl font-semibold text-gray-800 text-center mb-4">Lobby:</p>
+            <div className="flex justify-around max-w-md flex-wrap m-auto mb-2">
+                {paper.editors.map((text, i) => <div className="badge badge-lg px-6 py-4" key={i}>{text}</div>)}
+            </div>
+
+            <hr className="m-auto w-[97%] my-8 border-[1px] border-gray-300" />
+
+            {isHost && (<div className="m-auto text-center">
+                <p className="text-2xl"><strong>Paper Code:</strong> {paperDocId}</p>
+                <button className="btn bg-blue-600 hover:bg-blue-700 mt-4 m-auto" onClick={() => onPaperAction({ type: 'state-change', value: 'game' })}>Start game</button>
             </div>)}
         </div>
     )
@@ -132,7 +143,8 @@ function CompletedPaper({paperDocId, db, paper}){
 
     return (
         <div>
-            { currentSection.articles.map((article, i) => <Article key={i} article={article} />) }
+            <Heading />
+            { currentSection.articles.map((article, i) => <Article flipped={i%2==0} key={i} article={article} />) }
         </div>
     )
 }

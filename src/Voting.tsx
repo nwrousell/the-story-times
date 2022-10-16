@@ -23,17 +23,17 @@ export default function Voting({ article, trueVotes, falseVotes, onVote, show=fa
 
     return (
         <div>
-            <Article article={article} />
+            <div className="my-8"><Article article={article} /></div>
             { !show && (<div className="flex items-center justify-between">
                 <div>
-                    <button onClick={() => handleVote('lie')} className="btn btn-square w-16 h-16 btn-xl btn-error">
+                    <button onClick={() => handleVote('lie')} className="btn w-16 h-16 btn-xl btn-error">
                         <MdClear size={32} className="text-white" />
                         <p className="text-white text-sm">Lie</p>
                     </button>
                     <p>{ falseVotes } votes</p>
                 </div>
                 <div>
-                    <button onClick={() => handleVote('truth')} className="btn btn-square w-16 h-16 btn-xl btn-success">
+                    <button onClick={() => handleVote('truth')} className="btn w-16 h-16 btn-xl btn-success">
                         <MdCheck size={32} className="text-white" />
                         <p className="text-white text-sm">Truth</p>
                     </button>

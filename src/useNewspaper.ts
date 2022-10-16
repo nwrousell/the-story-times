@@ -6,6 +6,7 @@ import { CatchTheLiesArticleGame } from "./useSections";
 
 export interface Newspaper {
     title: string;
+    date: string;
     editors: string[]; // Each person's name, the index of this matters too for which prompts you receive, etc.
     state: 'lobby' | 'game' | 'completed'; // the state of the overall newspaper
     sectionIds: string[]; // a list of doc ids pointing to each game

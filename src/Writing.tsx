@@ -22,20 +22,20 @@ export default function Writing({ currentSection, playerIndex, onSubmit, setArti
             <div className="flex items-center gap-8 justify-around mb-8">
                 { prompts.map((text, i) => <p className="text-gray-800 font-semibold" key={i}>{ text }</p>) }
             </div>
-            { isLie && (<div className="flex my-4">
+            { isLie && (<div className="flex items-center my-4 p-4 rounded-md bg-gray-50 border-blue-600 border">
                 <GiFingersCrossed size={32} className="mr-2" />
                 <p>You're telling a lie! Try to trick everyone into believing your story by adding plenty of details.</p>
             </div>)}
             <div className="mb-8">
-                <p className="text-lg font-semibold text-gray-800">Write your article</p>
+                <p className="text-lg font-semibold text-gray-800 mb-1">Write your article</p>
                 <textarea className="textarea w-full bg-gray-100 p-2" placeholder="Don't stop writing!" onChange={(e) => setBody(e.target.value)} />            
             </div>
             <div className="mb-8">
-                <p className="text-lg font-semibold text-gray-800">Now give your article a <i>sensational</i> headline</p>
+                <p className="text-lg font-semibold text-gray-800 mb-1">Now give your article a <i>sensational</i> headline</p>
                 <input type="text" className="input w-full border-2 border-gray-200" onChange={(e) => setHeadline(e.target.value)} />
             </div>
             
-            <button onClick={onSubmit} className="btn btn-wide">Submit for Review</button>
+            <button onClick={onSubmit} className="btn w-full bg-blue-600 hover:bg-blue-700">Submit for Review</button>
         </div>
     )
 }
