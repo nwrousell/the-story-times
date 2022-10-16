@@ -5,7 +5,7 @@ import { GiFingersCrossed } from 'react-icons/gi'
 
 export default function Writing({ currentSection, playerIndex, onSubmit, setArticle, playerName }) {
     const [isLie, setIsLie] = useState(() => Math.random() < CHANCE_OF_LIE)
-    const [imageSelected, setImageSelected] = useState(-1)
+    const [imageSelected, setImageSelected] = useState(0)
     const [headline, setHeadline] = useState("")
     const [body, setBody] = useState("")
 
@@ -25,7 +25,7 @@ export default function Writing({ currentSection, playerIndex, onSubmit, setArti
                 { prompts.map((text, i) => <p className="text-gray-800 font-semibold" key={i}>{ text }</p>) }
             </div>
             { isLie && (<div className="flex items-center my-4 p-4 rounded-md bg-gray-50 border-blue-600 border">
-                <img src="/images/crossed-fingers.png" className="w-4 h-auto mr-2" />
+                <img src="/images/crossed-fingers.png" className="w-16 h-16 mr-2" />
                 <p>You're telling a lie! Try to trick everyone into believing your story by adding plenty of details.</p>
             </div>)}
             <div className="mb-8">

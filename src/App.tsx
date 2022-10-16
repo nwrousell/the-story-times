@@ -47,8 +47,9 @@ function App() {
     }
 
     return (
-        <div className="flex justify-center md:pt-32 min-h-screen">
-            <div className="newspaper border border-gray-200 shadow-md rounded-xl bg-white p-4 md:p-16 max-w-5xl w-full h-full">
+        <div className="flex justify-center md:py-32 min-h-screen">
+            {/* BELOW THIS LINE */}
+            <div id="newspaper" className="newspaper border border-gray-200 shadow-md rounded-xl bg-white p-4 md:p-16 max-w-5xl w-full h-full">
                  { loading && <h1 className="text-4xl">Loading</h1> }
                 {(userType == 'none' && !loading) && <StartingScreen setName={setName} setJoinCode={setJoinCode} handleCreatePaper={handleCreatePaper} handleJoinPaper={handleJoinPaper} />}
 

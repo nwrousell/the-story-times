@@ -10,6 +10,7 @@ import Article from "./Article";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { Heading } from "./App";
+import { FiClipboard } from 'react-icons/fi'
 
 
 export default function Client({ db, paperDocId, name, isHost }) {
@@ -22,19 +23,21 @@ export default function Client({ db, paperDocId, name, isHost }) {
             return <Lobby isHost={isHost} paper={paper} paperDocId={paperDocId} onPaperAction={onPaperAction} />
         case 'game':
             return <>
-                        <Overlay />
-                        <div className="absolute z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-6xl w-full bg-white rounded-md"><Game onPaperAction={onPaperAction} isHost={isHost} paperDocId={paperDocId} db={db} paper={paper} name={name} /></div>
-                    </>
+                <Overlay />
+                <div className="absolute z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-6xl w-full bg-white rounded-md"><Game onPaperAction={onPaperAction} isHost={isHost} paperDocId={paperDocId} db={db} paper={paper} name={name} /></div>
+            </>
         case 'completed':
             return <CompletedPaper paperDocId={paperDocId} db={db} paper={paper} />
     }
 }
 
-function Overlay(){
+function Overlay() {
     return <div className="fixed inset-0 z-20 bg-gray-800 dark:bg-gray-200 opacity-30" />
 }
 
 function Lobby({ paper, onPaperAction, paperDocId, isHost }) {
+    const [copied, setCopied] = useState(false)
+
     return (
         <div>
             <Heading />
@@ -47,7 +50,11 @@ function Lobby({ paper, onPaperAction, paperDocId, isHost }) {
             <hr className="m-auto w-[97%] my-8 border-[1px] border-gray-300" />
 
             {isHost && (<div className="m-auto text-center">
-                <p className="text-2xl"><strong>Paper Code:</strong> {paperDocId}</p>
+                <div className="flex items-center justify-center">
+                    <p className="text-2xl mr-2"><strong>Paper Code:</strong> {paperDocId}</p>
+                    {!copied ? <FiClipboard className="cursor-pointer hover:text-blue-600" size={24} onClick={() => { navigator.clipboard.writeText(paperDocId); setCopied(true) }} /> :
+                        <p >Copied to clipboard!</p>}
+                </div>
                 <button className="btn bg-blue-600 hover:bg-blue-700 mt-4 m-auto" onClick={() => onPaperAction({ type: 'state-change', value: 'game' })}>Start game</button>
             </div>)}
         </div>
@@ -69,25 +76,25 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction }) {
     }
 
     const handleWritingTimeUp = () => {
-        if(!submitted) handleArticleSubmit()
+        if (!submitted) handleArticleSubmit()
 
-        if(isHost){
+        if (isHost) {
             setTimeout(() => onSectionAction({ type: 'state-change', value: 'voting' }), 1000)
         }
     }
 
     const handleVotingTimeUp = () => {
-        if(!isHost) return
+        if (!isHost) return
 
         console.log("IEGIUHOI")
-        if(currentSection.state == 'voting'){
+        if (currentSection.state == 'voting') {
             onSectionAction({ type: 'state-change', value: 'voting-show' })
-        }else{
-            if(currentSection.articlesLeft.length == 0){
+        } else {
+            if (currentSection.articlesLeft.length == 0) {
                 // round is done
                 console.log("PAPER COMPLETED")
                 onPaperAction({ type: 'state-change', value: 'completed' })
-            }else{
+            } else {
                 onSectionAction({ type: 'state-change', value: 'voting' })
             }
         }
@@ -102,7 +109,7 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction }) {
             switch (currentSection.state as CatchTheLiesArticleGame["state"]) {
                 case 'countdown':
                     return (
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center my-32">
                             <FlipCountdown endAtZero hideYear hideMonth hideDay hideHour endAt={getDateForFlipdown(currentSection.timerEnd)} onTimeUp={() => isHost && onSectionAction({ type: 'state-change', value: 'writing' })} />
                         </div>
                     )
@@ -110,8 +117,8 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction }) {
                     return (
                         <div>
                             <FlipCountdown endAtZero onTimeUp={handleWritingTimeUp} hideYear hideMonth hideDay hideHour endAt={getDateForFlipdown(currentSection.timerEnd)} />
-                            { submitted && <div>Submitted</div> }
-                            { !submitted && <Writing playerName={name} setArticle={setArticle} onSubmit={handleArticleSubmit} currentSection={currentSection} playerIndex={playerIndex} /> }
+                            {submitted && <div>Submitted</div>}
+                            {!submitted && <Writing playerName={name} setArticle={setArticle} onSubmit={handleArticleSubmit} currentSection={currentSection} playerIndex={playerIndex} />}
                         </div>
                     )
                 case 'voting':
@@ -133,7 +140,7 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction }) {
             }
     }
 }
-function CompletedPaper({paperDocId, db, paper}){
+function CompletedPaper({ paperDocId, db, paper }) {
     // console.log(paperDocId, db, paper)
     // const [previousSections, currentSection, onSectionAction] = useSections(db, paperDocId, paper.sectionIds, paper.currentSectionId)
     const sectionDocRef = doc(db, 'papers', paperDocId, 'sections', paper.sectionIds[0])
@@ -141,10 +148,23 @@ function CompletedPaper({paperDocId, db, paper}){
 
     if (!currentSection) return <div>loading</div>
 
+    const printNewspaper = () => {
+        var pdf = document.getElementById("newspaper");
+        var mywindow = window.open("", "PRINT", "height=600,width=600");
+        mywindow.document.write(pdf.innerHTML);
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+    }
+
     return (
         <div>
             <Heading />
-            { currentSection.articles.map((article, i) => <Article flipped={i%2==0} key={i} article={article} />) }
+            {currentSection.articles.map((article, i) => <Article lastArticle={i + 1 == currentSection.articles.length} flipped={i % 2 == 0} key={i} article={article} />)}
+
+            <button onClick={printNewspaper} className="btn fixed right-4 bottom-4">
+                Print
+            </button>
         </div>
     )
 }

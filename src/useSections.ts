@@ -3,7 +3,6 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { useState, useEffect } from 'react'
 import { getDateXSecondsAway } from "./date-functions";
 import { PROMPTS_PER_USER, TIME_TO_SEE_VOTING_RESULTS, TIME_TO_VOTE, TIME_TO_WRITE } from "./constants";
-import { updateDo } from "typescript";
 
 export interface CatchTheLiesArticleGame {
     sectionType: 'catch-the-lies'
@@ -56,7 +55,6 @@ export default function useSections(db: Firestore, paperDocId: string, sectionId
 
         let tempCurrentSection = { ...currentSection }
         const currentSectionDocRef = doc(db, 'papers', paperDocId, 'sections', sectionIds[currentSectionIndex])
-        // ! Everything is catch-the-lies for right now
         switch (type) {
             case 'state-change':
                 switch (value as CatchTheLiesArticleGame["state"]) {
