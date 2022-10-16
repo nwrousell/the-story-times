@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# Overview
+An online experience to help you connect and bond with friends and family far away by creating a "newspaper" filled with stories both real and fictitious. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Inspiration
+Having recently moved away from home as college freshmen, we wanted to create something that would be a fun way to connect with family, friends, and other loved ones, even across long distances. We became very interested in the concept of getting people talking about their life experiences, as we've found that to be a great way to grow closer with others while learning interesting (and often surprising) new things about the people you love. And, in a  hackathon focusing on the retro, a collaborative newspaper seemed like the perfect way to tie all of these themes together in a fun and accessible way.
+## How we built it
+ - Built with React (Typescript)
+ - Styled with TailwindCSS
+ - Google Firestore as a database
+ - Hand-drawn images to serve as the articles' "photographs"
 
-## Available Scripts
+## Challenges
+ - Syncing data across "editors" of the newspaper
+ - Emulating the classic newspaper style
 
-In the project directory, you can run:
+## Accomplishments that we're proud of
+ - Overall design / feel
+ - Learned new things / had to tackle a different kind of project than what we're used to
 
-### `npm start`
+## What we learned
+Fast prototypes don't need the most elegant code, but spending time in the beginning thinking about the structure and flow of information is time well spent.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## What's next for The Story Times
+ - Tweaking / balancing
+ - Potentially other game modes (crossword, etc.)
