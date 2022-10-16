@@ -9,7 +9,7 @@ export function generatePrompts(numOfPlayers:Number){
     return generateAllPrompts(numOfPlayers) as string[]
 }
 
-function generateAllPrompts2(n: Number){
+function generateAllPrompts(n: Number){
     let finalPrompts = [];
     let promptsLeft = modeFilterPrompts(allPrompts);
     for (let i = 0; i < n; i++) {
@@ -23,7 +23,7 @@ function generateAllPrompts2(n: Number){
     return finalPrompts;
 }
 
-function generateAllPrompts(n: Number){
+function generateAllPrompts2(n: Number){
     let finalPrompts = [];
     let promptsLeft = modeFilterPrompts(allPrompts);
     for (let i = 0; i < n; i++) {

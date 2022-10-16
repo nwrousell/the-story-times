@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Image from "./ui/Image";
 import Voting from "./Voting";
 import Article from "./Article";
-import { doc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { Heading } from "./App";
 import { FiClipboard } from 'react-icons/fi'
@@ -64,7 +64,7 @@ function Lobby({ paper, onPaperAction, paperDocId, isHost }) {
 }
 function Game({ paperDocId, db, paper, name, isHost, onPaperAction, numOfPlayers }) {
     const [previousSections, currentSection, onSectionAction] = useSections(db, paperDocId, paper.sectionIds, paper.currentSectionIndex, numOfPlayers)
-    const [article, setArticle] = useState()
+    const [article, setArticle] = useState({ test: true })
     const [submitted, setSubmitted] = useState(false)
     const [hasVoted, setHasVoted] = useState(false)
 
@@ -73,22 +73,30 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction, numOfPlayers
     const playerIndex = paper.editors.findIndex((editorName) => editorName == name)
 
     const handleArticleSubmit = () => {
+        console.log("hello", article)
         onSectionAction({ type: 'add-article', value: article })
+        // const sectionDocRef = doc(db, 'papers', paperDocId, 'sections', paper.sectionIds[0])
+        // updateDoc(sectionDocRef, {
+        //     articles: arrayUnion(article)
+        // })
         setSubmitted(true)
+    }
+
+    const callIt = () => {
+        onSectionAction({ type: 'state-change', value: 'voting' })
     }
 
     const handleWritingTimeUp = () => {
         if (!submitted) handleArticleSubmit()
 
         if (isHost) {
-            setTimeout(() => onSectionAction({ type: 'state-change', value: 'voting' }), 1000)
+            setTimeout(callIt, 3000)
         }
     }
 
     const handleVotingTimeUp = () => {
         if (!isHost) return
 
-        console.log("IEGIUHOI")
         if (currentSection.state == 'voting') {
             onSectionAction({ type: 'state-change', value: 'voting-show' })
         } else {
@@ -106,6 +114,8 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction, numOfPlayers
         onSectionAction({ type: 'vote', value: { thisVote, lastVote } })
     }
 
+    console.log(article)
+
     switch (currentSection.sectionType as SectionType) {
         case 'catch-the-lies':
             switch (currentSection.state as CatchTheLiesArticleGame["state"]) {
@@ -118,7 +128,7 @@ function Game({ paperDocId, db, paper, name, isHost, onPaperAction, numOfPlayers
                 case 'writing':
                     return (
                         <div>
-                            <FlipCountdown endAtZero onTimeUp={handleWritingTimeUp} hideYear hideMonth hideDay hideHour endAt={getDateForFlipdown(currentSection.timerEnd)} />
+                            {/* <FlipCountdown endAtZero onTimeUp={() => handleWritingTimeUp()} hideYear hideMonth hideDay hideHour endAt={getDateForFlipdown(currentSection.timerEnd)} /> */}
                             {submitted && <div>Submitted</div>}
                             {!submitted && <Writing playerName={name} setArticle={setArticle} onSubmit={handleArticleSubmit} currentSection={currentSection} playerIndex={playerIndex} />}
                         </div>

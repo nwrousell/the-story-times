@@ -105,7 +105,7 @@ export function Heading(){
 
 function Attribution(){
     return (
-        <p className="fixed z-0 left-1/2 -translate-x-1/2 bottom-0 p-2 bg-white border">Created in under 36 hours for HackHarvard 2022 by Noah Rousell, Alexander Portland, Ryan Yang</p>
+        <p className="fixed z-0 left-1/2 -translate-x-1/2 bottom-0 p-2 bg-white border text-center">Created in under 36 hours for HackHarvard 2022 by Noah Rousell, Alexander Portland, and Ryan Yang</p>
     )
 }
 

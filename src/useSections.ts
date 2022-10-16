@@ -63,15 +63,14 @@ export default function useSections(db: Firestore, paperDocId: string, sectionId
                         })
                         break;
                     case 'voting':
-                        if(currentSection.articles.length < numOfPlayers) setTimeout(() => onAction({ type: 'state-change', value: 'voting' }), 500)
-                        
+                        // if(currentSection.articles.length < numOfPlayers) setTimeout(() => onAction({ type: 'state-change', value: 'voting' }), 500)
+
                         // this branch is returned to after each article is voted on (except for the last)
                         let articlesLeft = currentSection.articlesLeft
                         if (articlesLeft == null) {
                             articlesLeft = []
                             for(let index in currentSection.articles) articlesLeft.push(index)
                         }
-                        console.log(articlesLeft)
                         const randIndex = Math.floor(Math.random() * articlesLeft.length)
                         const currentArticle = articlesLeft[randIndex]
 
@@ -100,10 +99,11 @@ export default function useSections(db: Firestore, paperDocId: string, sectionId
                 break;
             case 'add-article':
                 const isLastArticle = currentSection.articles.length + 1 == currentSection.prompts.length / PROMPTS_PER_USER
-                tempCurrentSection.articles.push({ ...value, trueVotes: 0, falseVotes: 0 })
+                tempCurrentSection.articles.push(value)
                 await setSections([tempCurrentSection])
-                await updateDoc(currentSectionDocRef, {
-                    articles: arrayUnion({ ...value, trueVotes: 0, falseVotes: 0 })
+                console.count('hello2')
+                updateDoc(currentSectionDocRef, {
+                    articles: arrayUnion(value)
                 })
                 if (isLastArticle) onAction({ type: 'state-change', value: 'voting' })
                 break;

@@ -1,4 +1,4 @@
-export const TIME_TO_WRITE = 180 // in seconds
+export const TIME_TO_WRITE = 20 // in seconds
 export const TIME_TO_VOTE = 30 // in seconds
 export const TIME_TO_SEE_VOTING_RESULTS = 5 // in seconds
 
