@@ -15,7 +15,7 @@ export default function Article({ article, flipped = false }) {
             <div className={`md:grid hidden md:grid-cols-2 gap-4 ${!flipped ? 'md:block' : 'hidden'}`}>
                 <Image path={article.imagePath} />
                 <div className="">
-                    <p className="text-lg font-serif first-letter:text-4xl">{article.body}</p>
+                    <p className="text-lg font-serif first-letter:text-4xl first-letter:font-bold">{article.body}</p>
                 </div>
             </div>
         </div>

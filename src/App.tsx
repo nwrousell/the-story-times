@@ -48,7 +48,7 @@ function App() {
 
     return (
         <div className="flex justify-center md:pt-32 min-h-screen">
-            <div className="newspaper shadow-md rounded-xl bg-white p-4 md:p-16 max-w-5xl w-full h-full">
+            <div className="newspaper border border-gray-200 shadow-md rounded-xl bg-white p-4 md:p-16 max-w-5xl w-full h-full">
                  { loading && <h1 className="text-4xl">Loading</h1> }
                 {(userType == 'none' && !loading) && <StartingScreen setName={setName} setJoinCode={setJoinCode} handleCreatePaper={handleCreatePaper} handleJoinPaper={handleJoinPaper} />}
 
@@ -65,7 +65,7 @@ function StartingScreen({ handleCreatePaper, handleJoinPaper, setJoinCode, setNa
             <div className="py-16 flex flex-col justify-center items-center">
                 <div>
                     <p className="mb-1 font-semibold text-lg">Name</p>
-                    <input type="text" className="input block" onChange={(e) => setName(e.target.value)} placeholder="name here" />
+                    <input type="text" className="input input-bordered block" onChange={(e) => setName(e.target.value)} placeholder="name here" />
                 </div>
 
                 <hr className="m-auto w-[40%] my-8 border-[1px] border-gray-300" />
@@ -77,7 +77,7 @@ function StartingScreen({ handleCreatePaper, handleJoinPaper, setJoinCode, setNa
                 <div>
                 <p className="mb-1 font-semibold text-lg">Join Code</p>
                     <div className="input-group m-auto">
-                        <input className="input" onChange={(e) => setJoinCode(e.target.value)} type="text" placeholder="join code here" />
+                        <input className="input input-bordered" onChange={(e) => setJoinCode(e.target.value)} type="text" placeholder="join code here" />
                         <button className="btn bg-blue-600 hover:bg-blue-700" onClick={handleJoinPaper}>Join a paper</button>
                     </div>
                 </div>
