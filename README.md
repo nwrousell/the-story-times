@@ -1,4 +1,6 @@
 # Overview
+Created for HackHarvard 2022.
+
 An online experience to help you connect and bond with friends and family far away by creating a "newspaper" filled with stories both real and fictitious. 
 
 ## Inspiration
